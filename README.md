@@ -1,4 +1,5 @@
-# 📞 Telco Customer Churn Prediction & Voice AI Assistant
+# 📞 Telco Churn Conversational Voice Assistant
+#### *Telco Customer Churn Prediction & Voice AI Assistant*
 
 An interactive machine learning application that predicts customer churn in the telecommunications industry and provides a conversational Voice AI Assistant to help users understand churn-related insights.
 

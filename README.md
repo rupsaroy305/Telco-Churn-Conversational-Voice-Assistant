@@ -1,151 +1,130 @@
-# 📞 Telco Churn Conversational Voice Assistant
-#### *Telco Customer Churn Prediction & Voice AI Assistant*
+# Telco Churn AI Dashboard & Voice Assistant
 
-An interactive machine learning application that predicts customer churn in the telecommunications industry and provides a conversational Voice AI Assistant to help users understand churn-related insights.
+An interactive Streamlit application for exploring telecom customer churn, estimating churn risk with a saved XGBoost model, planning retention actions, tracking follow-ups, and asking questions through a voice-enabled assistant.
 
-## Project Overview
+> **Project note:** The application uses the existing trained XGBoost model. It does not retrain the model when the dashboard starts. The original notebook can remain unchanged.
 
-Customer churn is a major challenge for telecommunications companies because losing existing customers can negatively impact business revenue and growth.
+## Features
 
-This project uses **Machine Learning (XGBoost)** to predict whether a customer is likely to leave a telecom service. It also includes a **Streamlit-based Voice AI Assistant** that allows users to interact with the application through text and voice.
+- **Dashboard:** customer overview and key churn metrics.
+- **Predict a Customer:** enter an individual customer's details and view the estimated churn probability and risk category.
+- **Churn Analytics:** explore churn patterns and customer risk.
+- **Customer Explorer:** filter and inspect customers in the dataset.
+- **Retention Center:** identify customers who may need retention attention and review suggested actions.
+- **Follow-up Tracker:** save and manage customer follow-up records locally using SQLite.
+- **Voice AI Assistant:** type a question or record a voice message in the chat input. The assistant displays a written response, generates spoken audio, and lets you replay its latest answer.
+- **Permanent dataset:** the Telco CSV is loaded automatically from the project's `data/` folder, so users do not need to upload it every time.
 
-The goal is to help businesses identify customers at risk of churn and support better customer retention decisions.
-
-## Key Features
-
-- **Customer Churn Prediction:** Predicts whether a customer is likely to churn using a trained XGBoost model.
-- **Interactive Streamlit Dashboard:** Provides a user-friendly interface for entering customer details and viewing predictions.
-- **Voice AI Assistant:** Enables users to ask churn-related questions using voice or text.
-- **Speech-to-Text:** Converts spoken questions into text using SpeechRecognition.
-- **Text-to-Speech:** Provides spoken responses using pyttsx3.
-- **Conversational Interaction:** Supports multi-turn conversations and contextual follow-up questions.
-- **Data Preprocessing:** Handles numerical scaling and categorical feature encoding.
-- **Feature Engineering:** Creates additional features such as average monthly spend, tenure groups, and charge levels.
-
-## Technologies Used
-
-| Technology | Purpose |
-|---|---|
-| Python | Core programming language |
-| Pandas & NumPy | Data manipulation and preprocessing |
-| Scikit-learn | Feature engineering and preprocessing |
-| XGBoost | Customer churn prediction |
-| Streamlit | Interactive web application |
-| SpeechRecognition | Speech-to-text conversion |
-| pyttsx3 | Text-to-speech conversion |
-| Jupyter Notebook | Model development and experimentation |
-
-##  Machine Learning Workflow
-
-1. **Data Collection:** Used a Telco Customer Churn dataset containing customer demographics, services, account information, and churn status.
-2. **Data Preprocessing:** Handled missing values, converted data types, and prepared numerical and categorical features.
-3. **Feature Engineering:** Created additional features to capture customer spending patterns and tenure categories.
-4. **Feature Transformation:** Applied StandardScaler to numerical features and OneHotEncoder to categorical features.
-5. **Model Development:** Trained an XGBoost classifier to identify customers likely to churn.
-6. **Threshold Optimization:** Used a classification threshold of 0.40 for churn prediction.
-7. **Deployment:** Integrated the trained model into a Streamlit application.
-
-##  Voice AI Assistant
-
-The project includes a conversational assistant designed to make churn-related information easier to access.
-
-Users can:
-- Ask questions about customer churn.
-- Interact through text or voice.
-- Receive spoken responses.
-- Ask follow-up questions during a conversation.
-- Understand churn predictions and possible retention strategies.
-
-The current assistant uses rule-based conversational responses, SpeechRecognition, and pyttsx3 for voice interaction.
-
-##  Project Structure
+## Project structure
 
 ```text
-telco-churn-voice-assistant/
-│
+telco_churn_dashboard/
 ├── app.py
 ├── requirements.txt
 ├── README.md
-│
+├── data/
+│   └── telco_churn.csv
 ├── models/
 │   ├── model.pkl
 │   └── threshold.pkl
-│
-└── .gitignore
+└── followups.db              # created automatically when the app runs
 ```
 
-**Note:** The trained model files and original dataset are not included in this repository by default. Add the required model files locally before running the prediction application.
+Keep the dataset and model files in the locations shown above. If your files have different names, update the corresponding paths in `app.py`.
 
-## Installation and Setup
+## Requirements
 
-### 1. Clone the repository
+- Python 3.10 or newer (Python 3.11 recommended)
+- The Telco customer churn CSV used by the project
+- The existing trained model file: `models/model.pkl`
+- The decision threshold file: `models/threshold.pkl` (the app uses 0.40 as a fallback if configured that way)
+- A working microphone for voice input
+- Internet access for Google speech recognition used by `SpeechRecognition`
 
-```bash
-git clone YOUR_REPOSITORY_URL
-cd telco-churn-voice-assistant
+## Setup on Windows
+
+Open Command Prompt or Anaconda Prompt and navigate to the project folder:
+
+```bat
+cd path\to\telco_churn_dashboard
 ```
 
-### 2. Create a virtual environment
+Create and activate a virtual environment (recommended):
 
-```bash
-python -m venv venv
+```bat
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-Activate it:
+Install dependencies:
 
-**Windows:**
-```bash
-venv\Scripts\activate
-```
-
-**Mac/Linux:**
-```bash
-source venv/bin/activate
-```
-
-### 3. Install dependencies
-
-```bash
+```bat
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Add the required files
+Place the files in the expected folders:
 
-Place the following files inside the `models/` directory:
+- Copy your full Telco CSV to `data/telco_churn.csv`.
+- Copy the existing XGBoost estimator to `models/model.pkl`.
+- Copy the decision threshold to `models/threshold.pkl`.
 
-- `model.pkl`
-- `threshold.pkl`
+Run the application:
 
-Upload the original Telco Customer Churn CSV through the application when prompted.
-
-Use the same dataset and preprocessing-compatible data used during model development.
-
-### 5. Run the Streamlit application
-
-```bash
+```bat
 streamlit run app.py
 ```
 
-The application will open in your browser.
+Streamlit will display a local address, usually `http://localhost:8501`. Open it in your browser.
 
-## Expected Outcome
+## Dataset
 
-The application provides:
-- Customer churn predictions.
-- Interactive customer-level analysis.
-- Conversational access to churn-related information.
-- Voice-based interaction for a more accessible user experience.
+The app expects the full Telco Customer Churn dataset, not a small preview. The individual-customer prediction and preprocessing logic uses these fields from the dataset:
 
-## Future Enhancements
+- `tenure`
+- `MonthlyCharges`
+- `TotalCharges`
+- `Contract`
+- `InternetService`
+- `TechSupport`
 
-- Integrate an LLM API for more intelligent and flexible conversations.
-- Improve the assistant's ability to explain individual customer predictions.
-- Add visual analytics and customer churn dashboards.
-- Deploy the application on Streamlit Community Cloud.
-- Develop personalized customer retention recommendations.
-- Integrate additional speech recognition and voice synthesis options.
+The dataset also commonly includes customer and service attributes such as `customerID`, `gender`, `SeniorCitizen`, `Partner`, `Dependents`, `PhoneService`, `MultipleLines`, `OnlineSecurity`, `OnlineBackup`, `DeviceProtection`, `StreamingTV`, `StreamingMovies`, `PaperlessBilling`, `PaymentMethod`, and `Churn`.
 
-## Author
+The permanent CSV is read locally by the app. To use a newer dataset, replace `data/telco_churn.csv` with a compatible CSV and restart or refresh the app. Make sure the replacement dataset is compatible with the preprocessing used for the saved model.
 
-**Rupsa Roy\**
----
+## Model and prediction notes
+
+- The application loads the existing XGBoost estimator from `models/model.pkl`.
+- The decision threshold is loaded from `models/threshold.pkl` when available; the project default is 0.40.
+- The app reconstructs the preprocessing objects from the permanent dataset because the original scaler and one-hot encoder were not exported separately.
+- For consistent results, use the same source dataset and compatible preprocessing setup that were used with the original model.
+- A churn probability is a model estimate, not a guarantee that a customer will leave. It should support, not replace, human review.
+
+**Do not retrain or overwrite the original model as part of normal app startup.** Model training and dashboard inference are separate tasks.
+
+## Voice AI Assistant
+
+The assistant supports both typed questions and recorded voice messages in the chat input. It can answer general questions about churn, customer risk, tenure, contracts, and retention ideas, and can discuss the latest customer prediction when one is available.
+
+- Speech-to-text uses the `SpeechRecognition` package with Google's web speech recognition service, so voice transcription requires internet access.
+- Text-to-speech uses `pyttsx3` locally. The available voice and audio playback depend on the operating system and installed speech engine.
+- The assistant's conversational answers are rule-based in this project; an external LLM API key is not required.
+- Browser autoplay policies may prevent audio from starting automatically. If that happens, use the audio player's Play control or the **Speak latest answer** button.
+
+## Follow-up records and privacy
+
+Follow-up entries are stored in a local SQLite database (`followups.db`) created by the app. Keep this file backed up if you need to preserve follow-up history. Do not commit real customer records, the SQLite database, private model artifacts, API keys, or other confidential information to a public repository.
+
+For a public GitHub repository, use an anonymized or permitted sample dataset, or keep the real dataset outside GitHub and provide it locally in `data/telco_churn.csv`.
+
+## Troubleshooting
+
+- **Dataset not found:** confirm the file is named `telco_churn.csv` and is inside the `data` folder.
+- **Model not found:** confirm `model.pkl` and `threshold.pkl` are inside `models`.
+- **Voice transcription fails:** check your microphone, internet connection, and microphone permissions in your browser/operating system.
+- **No spoken reply:** check that `pyttsx3` is installed and that your computer has a working speech engine. Use the audio player's Play button if autoplay is blocked.
+- **Dependency errors:** activate the project's virtual environment and run `pip install -r requirements.txt` again.
+
+## License and data
+
+Add a license before redistributing this project. Ensure you have permission to share the dataset and any model artifacts included with the repository. Remove or anonymize personal/customer information before publishing.

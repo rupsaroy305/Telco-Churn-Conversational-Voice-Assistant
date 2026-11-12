@@ -1,19 +1,33 @@
-# Telco Churn AI Dashboard & Voice Assistant
+# AI-Powered Telecom Customer Churn Prediction & Retention System
 
-An interactive Streamlit application for exploring telecom customer churn, estimating churn risk with a saved XGBoost model, planning retention actions, tracking follow-ups, and asking questions through a voice-enabled assistant.
+An end-to-end machine learning and conversational AI solution designed to help telecommunications businesses identify customers at risk of churn, understand customer behaviour, and develop proactive retention strategies.
 
-> **Project note:** The application uses the existing trained XGBoost model. It does not retrain the model when the dashboard starts. The original notebook can remain unchanged.
+This project combines **predictive analytics, XGBoost machine learning, interactive business intelligence, and a voice-enabled AI assistant** to transform customer data into actionable insights. It aims to support data-driven decision-making, improve customer retention, and reduce potential revenue loss.
 
-## Features
+## Project Overview
 
-- **Dashboard:** customer overview and key churn metrics.
-- **Predict a Customer:** enter an individual customer's details and view the estimated churn probability and risk category.
-- **Churn Analytics:** explore churn patterns and customer risk.
-- **Customer Explorer:** filter and inspect customers in the dataset.
-- **Retention Center:** identify customers who may need retention attention and review suggested actions.
-- **Follow-up Tracker:** save and manage customer follow-up records locally using SQLite.
-- **Voice AI Assistant:** type a question or record a voice message in the chat input. The assistant displays a written response, generates spoken audio, and lets you replay its latest answer.
-- **Permanent dataset:** the Telco CSV is loaded automatically from the project's `data/` folder, so users do not need to upload it every time.
+Customer churn is a major challenge in the telecommunications industry. Identifying customers who are likely to discontinue their services allows businesses to take preventive action before losing valuable customers.
+
+This solution analyses customer demographics, service subscriptions, tenure, billing information, and contract details to estimate churn probability and classify customer risk. It also provides an interactive analytics environment and a conversational AI assistant that helps users interpret predictions and explore possible retention strategies.
+
+## Key Capabilities
+
+- **Machine Learning-Based Churn Prediction:** Uses an XGBoost classification model to estimate the probability of customer churn.
+- **Customer Risk Segmentation:** Categorises customers into risk levels to help prioritise retention efforts.
+- **Interactive Business Intelligence Dashboard:** Presents churn trends, customer insights, service patterns, and analytical visualisations.
+- **Individual Customer Assessment:** Allows users to enter customer details and generate personalised churn predictions.
+- **AI-Powered Voice Assistant:** Enables users to ask questions through text or voice and receive conversational responses in written and spoken formats.
+- **Retention Strategy Recommendations:** Provides actionable suggestions to help reduce customer churn.
+- **Customer Follow-up Management:** Supports tracking of retention actions and follow-up activities.
+- **Dataset Management:** Supports a permanent customer dataset for consistent analysis, with the option to upload updated data.
+
+## Technology Stack
+
+Python | XGBoost | Scikit-learn | Pandas | NumPy | Streamlit | Plotly | Speech Recognition | Text-to-Speech | Conversational AI
+
+## Project Objective
+
+The primary objective is to build an intelligent, data-driven customer retention system that goes beyond predicting churn by helping users understand potential churn risks and take informed preventive actions.
 
 ## Project structure
 
